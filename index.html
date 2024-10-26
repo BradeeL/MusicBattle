@@ -1,0 +1,24 @@
+<html>
+    <head>
+        <link rel="stylesheet" href="index.css">
+        <script src="index.js"></script>
+        <h1>Music2Nerdle</h1>
+    </head>
+    <body onload="onPageLoad()">
+        <div id="login" class="container">
+            <label for="clientId">Client ID</label><br>
+            <input type="text" id="clientId"></input><br>
+            <label for="clientSecret">Client Secret</label><br>
+            <input type="text" id="clientSecret"></input><br>
+            <button id="authButton" onclick="requestAuth()">Request Authorization</button>
+        </div>
+        <div id="game" class="container">
+            <label for="artistId">Enter Artist ID</label><br>
+            <input type="text" id="artistId" oninput="searchArtists()"></input><br>
+            <button id="findArtist" onclick="searchArtists()">Find Artist</button><br>
+            <img src="" id="artistPic"></img>
+            <ul id="artistList" class="no-bullets"></ul>
+        </div>
+        
+    </body>
+</html>

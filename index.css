@@ -1,0 +1,70 @@
+body {
+    background-color: darkslategray;
+    background-size: cover;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    font-weight: bold;
+    text-align: center;
+}
+
+h1 {
+    margin-top: 10px;
+    margin-bottom: 10px;
+    color: antiquewhite;
+}
+
+#login{
+    display: none;
+}
+
+#artistPic{
+    width: 250;
+    height: 250;
+}
+
+ul.no-bullets {
+    list-style-type: none; /* Remove bullets */
+    padding: 0; /* Remove padding */
+    margin: 0; /* Remove margins */
+}
+
+ul li{
+    margin-bottom: 10px;
+}
+
+#game{
+    display: none;
+}
+
+h2 {
+    font-size: 50px;
+    margin-top: 0;
+    margin-bottom: 20px;
+    color: antiquewhite;
+}
+
+button {
+    border: none;
+    background: red;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    color: white;
+    font-weight: bold;
+    width: 200px;
+    margin-top: 10px;
+    margin-bottom: 15px;
+    border-radius: 5px;
+}
+
+#increment-btn {
+    background: darkred;
+}
+
+#save-btn {
+    background: darkgreen;
+}
+
+#root{
+    background:wheat;
+    margin-left: 30%;
+    margin-right: 30%;
+}
