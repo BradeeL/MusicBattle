@@ -94,7 +94,7 @@ function findArtist(id){
 function searchArtists(){
     if(document.getElementById("artistId").value!=""){
         callApi("GET",SEARCH+"?q="+document.getElementById("artistId").value+"&type=artist",null,handleSearchResponse);
-    }
+    } 
 }
 function handleSearchResponse(){
     if(this.status==200){
@@ -107,7 +107,7 @@ function handleSearchResponse(){
             console.log(li);
             list.appendChild(li);
         }
-        findArtist(data.artists.items[0].id);
+        //findArtist(data.artists.items[0].id);
 
     }
     else if (this.status==401){
