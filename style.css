@@ -8,32 +8,15 @@ body {
     text-align: center;
 }
 
-h1 {
-    margin-top: 10px;
-    margin-bottom: 10px;
-    color: antiquewhite;
-}
-
-#login{
-    display: none;
-}
-
-#artistPic{
-    width: 250;
-    height: 250;
-}
-
 .container{
     width: 400px;
     position: relative;
 }
 
-text{
-    vertical-align: bottom;
-}
-
-#game{
-    display: none;
+h1 {
+    margin-top: 10px;
+    margin-bottom: 10px;
+    color: antiquewhite;
 }
 
 h2 {
@@ -43,9 +26,24 @@ h2 {
     color: olive;
 }
 
-#findArtistBtn{
-    width:50px;
-    height:50px;
+h3{
+    font-size: 20px;
+    margin-top: 0;
+    color: azure;
+}
+
+ul{
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+}
+
+#login{
+    display: none;
+}
+
+#game{
+    display: none;
 }
 
 .autocomplete-input{
@@ -72,4 +70,8 @@ h2 {
 .autocomplete-list li{
     width: 100%;
     cursor: pointer;
+}
+
+#warning{
+    color: red;
 }

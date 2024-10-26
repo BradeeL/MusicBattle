@@ -1,11 +1,9 @@
 <html>
     <head>
         <title>Music2Heardle</title>
-        <link rel="icon" href="favicon.ico"/>
+        <link rel="icon" type="image/png" sizes="32x32" href="icon.png"/>
         <link rel="stylesheet" href="style.css">
         <script src="script.js"></script>
-        
-        
     </head>
     <body onload="onPageLoad()">
         <div id="login" class="container">
@@ -15,18 +13,26 @@
             <input type="text" id="clientSecret"></input><br>
             <button id="authButton" onclick="requestAuth()">Request Authorization</button>
         </div>
+        <div class="container">
+            <h1>Related Artists</h1>
+            <h3><ul id="relatedList"></ul></h3>
+        </div>
         <div id="game" class="container">
-            <h1>Music2Nerdle</h1>
+            <h1>Music2Heardle</h1>
+            <ul id="usedArtists"></ul>
             <h2>
-                <label>Enter Artist</label>
+                <label>Enter Artist</label><br>
+                <label id="warning"></label>
             </h2><br>
             <input type="text" id="artist-input" class="autocomplete-input" 
             oninput="searchArtists()" placeholder="Search for an artist"
-            onsubmit="addArtist()">
+            onkeydown="submitArtist()">
                 <ul id="artistList" class="autocomplete-list"></ul>
             </input><br>
-            <ul id="usedArtists">
-            </ul>
+        </div>
+        <div class="container">
+            <h1>Artists Used</h1>
+            <h3><ul id="usedList"></ul></h3>
         </div>
         
     </body>

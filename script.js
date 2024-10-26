@@ -5,6 +5,9 @@ var client_secret="";
 var access_token = null;
 var refresh_token=null;
 
+const artistsUsed= new Map();
+const relatedArtists=new Set();
+
 const AUTHORIZE = "https://accounts.spotify.com/authorize";
 const TOKEN = "https://accounts.spotify.com/api/token";
 const SONGS = "https://api.spotify.com/v1/tracks";
@@ -91,25 +94,87 @@ function findArtist(id){
     callApi("GET",ARTISTS+id,null,handleArtistResponse);
 }
 
-function addArtist(){
-    if(document.getElementById("artist-input").value!=""){
-        callApi("GET",SEARCH+"?q="+document.getElementById("artist-input").value+"&type=artist",null,handleAddResponse);
-    } 
+function submitArtist(){
+    if(event.key=='Enter'){
+        if(document.getElementById("artist-input").value!=""){
+            callApi("GET",SEARCH+"?q="+document.getElementById("artist-input").value+"&type=artist",
+            null,handleSubmitResponse);
+        } 
+    }
 }
 
-function handleAddResponse(){
+function handleSubmitResponse(){
+    if(this.status==200){
+        
+        var data = JSON.parse(this.responseText);
+        let key=data.artists.items[0].name;
+        if(artistsUsed.get(key)==null){
+            artistsUsed.set(key,1);
+        } 
+        else {
+            artistsUsed.set(key,artistsUsed.get(key)+1);
+        }
+        if (artistsUsed.get(key)>=4){
+            document.getElementById("warning").textContent="You can't use that artist anymore!";
+            artistsUsed.set(key,3);
+        } 
+        else if (!relatedArtists.has(key)&&relatedArtists.size>0) {
+            document.getElementById("warning").textContent="That artist does not connect!";
+            artistsUsed.set(key,artistsUsed.get(key)-1);
+            if(artistsUsed.get(key)<1)
+                artistsUsed.delete(key);
+        } 
+        else {
+            document.getElementById("warning").textContent=" ";
+            let arr=Array.from(artistsUsed,([name,value])=>({name,value}));
+            console.log(arr[0].name);
+            let list=document.getElementById("usedList");
+            removeAllItems("usedList");
+            for(i=0;i<arr.length;i++){
+                let li=document.createElement('li');
+                li.innerText=arr[i].name;
+                switch(arr[i].value){
+                    case 1:
+                        li.innerText+=" X . .";
+                        break;
+                    case 2:
+                        li.innerText+=" X X .";
+                        break;
+                    case 3:
+                        li.innerText+=" X X X";
+                        break;
+                }
+                list.appendChild(li);
+            }
+            
+            console.log(artistsUsed.get(key));
+            //if(artistsUsed.get(key)==null)
+            callApi("GET",ARTISTS+data.artists.items[0].id+"/related-artists",null,handleRelatedArtistsResponse);
+        }
+    }
+    else if (this.status==401){
+        refreshAccessToken();
+    }
+    else {
+        console.log(this.responseText);
+        alert(this.responseText);
+    }
+}
+
+function handleRelatedArtistsResponse(){
     if(this.status==200){
         var data = JSON.parse(this.responseText);
-        let list=document.getElementById("artistList");
-        removeAllItems("artistList");
-        for(i = 0; i < data.artists.items.length; i++){
+        let list=document.getElementById("relatedList");
+        removeAllItems("relatedList");
+        relatedArtists.clear();
+        for(i = 0;i<data.artists.length;i++){
             let li=document.createElement('li');
-            li.innerText=data.artists.items[i].name;
-            console.log(li);
+            li.innerText=data.artists[i].name;
+            relatedArtists.add(data.artists[i].name);
             list.appendChild(li);
         }
-        //findArtist(data.artists.items[0].id);
-
+        console.log(relatedArtists);
+        
     }
     else if (this.status==401){
         refreshAccessToken();
@@ -125,6 +190,7 @@ function searchArtists(){
         callApi("GET",SEARCH+"?q="+document.getElementById("artist-input").value+"&type=artist",null,handleSearchResponse);
     } 
 }
+
 function handleSearchResponse(){
     if(this.status==200){
         var data = JSON.parse(this.responseText);
@@ -133,7 +199,6 @@ function handleSearchResponse(){
         for(i = 0; i < data.artists.items.length; i++){
             let li=document.createElement('li');
             li.innerText=data.artists.items[i].name;
-            console.log(li);
             list.appendChild(li);
         }
         //findArtist(data.artists.items[0].id);
