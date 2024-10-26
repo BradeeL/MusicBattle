@@ -1,8 +1,11 @@
 <html>
     <head>
+        <title>Music2Heardle</title>
+        <link rel="icon" href="favicon.ico"/>
         <link rel="stylesheet" href="style.css">
         <script src="script.js"></script>
-        <h1>Music2Nerdle</h1>
+        
+        
     </head>
     <body onload="onPageLoad()">
         <div id="login" class="container">
@@ -13,15 +16,17 @@
             <button id="authButton" onclick="requestAuth()">Request Authorization</button>
         </div>
         <div id="game" class="container">
+            <h1>Music2Nerdle</h1>
             <h2>
                 <label>Enter Artist</label>
             </h2><br>
-            <input type="text" id="artistId" oninput="searchArtists()"></input><br>
-
-
-            <div class="column">
-                <ul id="artistList" class="no-bullets"></ul>
-            </div>          
+            <input type="text" id="artist-input" class="autocomplete-input" 
+            oninput="searchArtists()" placeholder="Search for an artist"
+            onsubmit="addArtist()">
+                <ul id="artistList" class="autocomplete-list"></ul>
+            </input><br>
+            <ul id="usedArtists">
+            </ul>
         </div>
         
     </body>

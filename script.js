@@ -91,9 +91,38 @@ function findArtist(id){
     callApi("GET",ARTISTS+id,null,handleArtistResponse);
 }
 
+function addArtist(){
+    if(document.getElementById("artist-input").value!=""){
+        callApi("GET",SEARCH+"?q="+document.getElementById("artist-input").value+"&type=artist",null,handleAddResponse);
+    } 
+}
+
+function handleAddResponse(){
+    if(this.status==200){
+        var data = JSON.parse(this.responseText);
+        let list=document.getElementById("artistList");
+        removeAllItems("artistList");
+        for(i = 0; i < data.artists.items.length; i++){
+            let li=document.createElement('li');
+            li.innerText=data.artists.items[i].name;
+            console.log(li);
+            list.appendChild(li);
+        }
+        //findArtist(data.artists.items[0].id);
+
+    }
+    else if (this.status==401){
+        refreshAccessToken();
+    }
+    else {
+        console.log(this.responseText);
+        alert(this.responseText);
+    }
+}
+
 function searchArtists(){
-    if(document.getElementById("artistId").value!=""){
-        callApi("GET",SEARCH+"?q="+document.getElementById("artistId").value+"&type=artist",null,handleSearchResponse);
+    if(document.getElementById("artist-input").value!=""){
+        callApi("GET",SEARCH+"?q="+document.getElementById("artist-input").value+"&type=artist",null,handleSearchResponse);
     } 
 }
 function handleSearchResponse(){
